@@ -98,9 +98,10 @@ $(document).ready(function () {
       var words = text.match(pattern);
       var wordsString = words.join('').trim();
       var superText = text.replace(/[a-zA-Z0-9\s]+/g, '');
-
+      var fontFamily = 'Webdings';
       $('.customControl').eq(1).val(wordsString);
-      $('.customControl').eq(2).val(superText);
+      $('.customControl').eq(2).val(superText);   
+      $('.customControl').eq(2).css('font-family', fontFamily);
     });
 });
 //*************************************************************************
