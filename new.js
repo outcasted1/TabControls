@@ -65,7 +65,7 @@ $(function () {
       var year = $('.ui-datepicker-year').val();
 
       if (year >= todayYear || (year === todayYear && month >= todayMonth)) {
-        if (date > todayDate && date <= todayDate + noOfDays) {
+        if (date >= todayDate && date <= todayDate + noOfDays) {
           dateElement.removeClass('ui-state-disabled');
           dateElement.parent().removeClass('ui-datepicker-unselectable');
         } else {
@@ -99,3 +99,4 @@ $(function () {
     });
   });
 });
+
