@@ -4,7 +4,7 @@ $('.ui-datepicker-month');
 $('.ui-datepicker .ui-datepicker-calendar td a');
 
 $(function () {
-  $('.customControl tbody').click(function () {
+  $('.customControl tbody, .ui-datepicker-header').click(function () {
     var today = new Date();
     var todayDate = today.getDate();
     var todayMonth = today.getMonth();
@@ -51,7 +51,7 @@ $(function () {
 });
 // Updated for future
 $(function () {
-  $('.customControl tbody').click(function () {
+  $('.customControl tbody, .ui-datepicker-header').click(function () {
     var today = new Date();
     var todayDate = today.getDate();
     var todayMonth = today.getMonth();
@@ -99,4 +99,3 @@ $(function () {
     });
   });
 });
-
