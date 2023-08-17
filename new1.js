@@ -1,5 +1,7 @@
 $(function () {
-  $('.customControl tbody, .ui-datepicker-header a, .ui-datepicker-header div').click(function () {
+  $(
+    '.customControl tbody, .ui-datepicker-header a, .ui-datepicker-header div'
+  ).click(function () {
     var today = new Date();
     var todayDate = today.getDate();
     var todayMonth = today.getMonth();
@@ -46,7 +48,9 @@ $(function () {
 });
 // Updated for future
 $(function () {
-  $('.customControl tbody, .ui-datepicker-header a, .ui-datepicker-header div').click(function () {
+  $(
+    '.customControl tbody, .ui-datepicker-header a, .ui-datepicker-header div'
+  ).click(function () {
     var today = new Date();
     var todayDate = today.getDate();
     var todayMonth = today.getMonth();
@@ -94,3 +98,65 @@ $(function () {
     });
   });
 });
+
+$(document).ready(function () {
+  var noOfDays = parseInt($('.clcontrol-textbox').val());
+
+  $("input[name='DateTimePicker1']").datepicker({
+    dateFormat: 'dd-mm-yy',
+    minDate: '-0D',
+    maxDate: '+' + noOfDays + 'D',
+  });
+});
+
+//********************************************************************* */
+
+$(document).ready(function () {
+  $('input[name="DateTimePicker1"]').addClass('dateInput');
+});
+
+$(function () {
+  $('.customControl tbody').click(function () {
+    $('.dateInput:eq(0)').datepicker();
+
+    var minDate = new Date();
+    var maxDate = new Date();
+
+    minDate.setDate(minDate.getDate() - 7);
+    maxDate.setDate(maxDate.getDate() + 7);
+
+    $('.dateInput:eq(0)').datepicker('option', 'minDate', minDate);
+    $('.dateInput:eq(0)').datepicker('option', 'maxDate', maxDate);
+  });
+});
+
+$(function () {
+  $('.customControl tbody').click(function () {
+    $('.dateInput:eq(0)').datepicker();
+    var minDate = new Date();
+
+    var numberOfDays = parseInt($('.clcontrol-textbox').val());
+    var maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + numberOfDays);
+
+    $('.dateInput:eq(0)').datepicker('option', 'minDate', minDate);
+    $('.dateInput:eq(0)').datepicker('option', 'maxDate', maxDate);
+  });
+});
+//************************************************************************************** */
+$(function () {
+  $('.customControl tbody').click(function () {
+    var minDate = new Date();
+    var numberOfDays = parseInt($('.clcontrol-textbox').val());
+    var maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + numberOfDays);
+
+    // Update the Datepicker options, and open it immediately
+    $('.dateInput:eq(0)')
+      .datepicker('option', 'minDate', minDate)
+      .datepicker('option', 'maxDate', maxDate)
+      .datepicker('show');
+  });
+});
+
+/********************************************************************************** */
