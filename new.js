@@ -3,58 +3,98 @@ $('.ui-datepicker-year');
 $('.ui-datepicker-month');
 $('.ui-datepicker .ui-datepicker-calendar td a');
 
-var today = new Date();
-var todayDate = today.getDate();
-var todayMonth = today.getMonth();
-var todayYear = today.getFullYear();
-
-
-function getCurrentDateComponents() {
-  var today = new Date();
-  var todayDate = today.getDate();
-  var todayMonth = today.getMonth();
-  var todayYear = today.getFullYear();
+$(function () {
   
-  return {
-    date: todayDate,
-    month: todayMonth,
-    year: todayYear
-  };
-}
-
-
-function setMinDateForInputs() {
-  var currentDate = getCurrentDateComponents();
-  
-
-  
-  dateInput.min = currentDate.date;
-  monthInput.min = currentDate.month + 1; 
-  yearInput.min = currentDate.year;
-}
-setMinDateForInputs();
-
-$(function(){
-  function getCurrentDateFormatted() {
+  $('.customControl tbody').click(function () {
     var today = new Date();
-    var todayDate = today.getDate().toString().padStart(2, '0'); 
-    var todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); 
-    var todayYear = today.getFullYear().toString();
-  
-    const myDate =`${todayDate}-${todayMonth}-${todayYear}`;
-    
-    return myDate;
-  }
-  var formattedDate = getCurrentDateFormatted();
-  console.log(formattedDate); 
+    var todayDate = today.getDate();
+    var todayMonth = today.getMonth();
+    var todayYear = today.getFullYear();
 
-$('.customControl tbody').click(function () {
+    var selectedMonth = parseInt($('.ui-datepicker-month').val());
+    var selectedYear = parseInt($('.ui-datepicker-year').val());
 
+    $('.ui-datepicker-calendar td a').each(function () {
+      var dateElement = $(this);
+      var date = parseInt(dateElement.text());
 
-  var dateValues = $('.ui-datepicker .ui-datepicker-calendar td a:contains('+todayDate+')');
-  var monthValues =$('.ui-datepicker-month').val(todayMonth);
-  var yearValues = $('.ui-datepicker-year').val(todayYear);
+      if (
+        (selectedYear <= todayYear && selectedMonth <= todayMonth) ||
+        selectedYear < todayYear
+      ) {
+        if (date < todayDate) {
+          dateElement.addClass('ui-state-disabled');
+          dateElement.parent().addClass('ui-datepicker-unselectable');
+        }
+      }
+    });
 
+    $('.ui-datepicker-month option').each(function () {
+      var monthElement = $(this);
+      var monthValue = parseInt(monthElement.val());
 
+      if (
+        (selectedYear <= todayYear && monthValue < todayMonth) ||
+        selectedYear < todayYear
+      ) {
+        monthElement.prop('disabled', true);
+      }
+    });
+
+    $('.ui-datepicker-year option').each(function () {
+      var yearElement = $(this);
+      var yearValue = parseInt(yearElement.val());
+      if (yearValue < todayYear) {
+        yearElement.prop('disabled', true);
+      }
+    });
+  });
 });
+// Updated for future
+$(function(){
+  var noOfDays = parseInt($('.clcontrol-textbox').val());
+
+  $('.customControl tbody').click(function () {
+    var today = new Date();
+    var todayDate = today.getDate();
+    var todayMonth = today.getMonth();
+    var todayYear = today.getFullYear();
+
+    $('.ui-datepicker-calendar td a').each(function() {
+      var dateElement = $(this);
+      var date = parseInt(dateElement.text());
+      var month = $('.ui-datepicker-month').val();
+      var year = $('.ui-datepicker-year').val();
+
+      if (year >= todayYear || (year === todayYear && month >= todayMonth)) {
+        if (date > todayDate && date <= todayDate + noOfDays) { 
+          dateElement.removeClass('ui-state-disabled'); 
+          dateElement.parent().removeClass('ui-datepicker-unselectable'); 
+        } else {
+          dateElement.addClass('ui-state-disabled');
+          dateElement.parent().addClass('ui-datepicker-unselectable');
+        }
+      }
+    });
+
+    $('.ui-datepicker-month option').each(function() {
+      var monthElement = $(this);
+      var monthValue = parseInt(monthElement.val());
+
+      if (todayYear === parseInt($('.ui-datepicker-year').val()) && monthValue > todayMonth) {
+        monthElement.prop('disabled', true);
+      } else if (todayYear < parseInt($('.ui-datepicker-year').val())) {
+        monthElement.prop('disabled', true);
+      }
+    });
+
+    $('.ui-datepicker-year option').each(function() {
+      var yearElement = $(this);
+      var yearValue = parseInt(yearElement.val());
+
+      if (yearValue > todayYear) {
+        yearElement.prop('disabled', true);
+      }
+    });
+  });
 });
